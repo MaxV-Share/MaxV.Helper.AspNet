@@ -10,11 +10,23 @@ namespace MaxV.Helper
         /// <summary>
         /// Parse string data json to a object data
         /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="data"></param>
-        /// <param name="ouput"></param>
         /// <returns></returns>
-        public static T TryParse<T>(this string data)
+        public static void TryParse<T>(this string data, out T result)
+        {
+            try
+            {
+                result = JsonSerializer.Deserialize<T>(data);
+            }
+            catch
+            {
+                result = default(T);
+            }
+        }
+        /// <summary>
+        /// Parse string data json to a object data
+        /// </summary>
+        /// <returns></returns>
+        public static T Parse<T>(this string data)
         {
             return JsonSerializer.Deserialize<T>(data);
         }
