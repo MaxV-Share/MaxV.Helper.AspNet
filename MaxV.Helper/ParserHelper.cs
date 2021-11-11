@@ -1,6 +1,6 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Text;
-using System.Text.Json;
 
 namespace MaxV.Helper
 {
@@ -10,15 +10,15 @@ namespace MaxV.Helper
         /// Parse string data json to a object data
         /// </summary>
         /// <returns></returns>
-        public static void TryParse<T>(this string data, out T result)
+        public static void TryParse<T>(this string data, out T result) where T : new()
         {
             try
             {
-                result = JsonSerializer.Deserialize<T>(data);
+                result = JsonConvert.DeserializeObject<T>(data);
             }
             catch
             {
-                result = default(T);
+                result = new T();
             }
         }
         /// <summary>
@@ -27,7 +27,7 @@ namespace MaxV.Helper
         /// <returns></returns>
         public static T Parse<T>(this string data)
         {
-            return JsonSerializer.Deserialize<T>(data);
+            return JsonConvert.DeserializeObject<T>(data);
         }
         /// <summary>
         /// Parse a object to string of json structure
@@ -37,7 +37,7 @@ namespace MaxV.Helper
             string result = string.Empty;
             try
             {
-                result = JsonSerializer.Serialize(data);
+                result = JsonConvert.SerializeObject(data);
                 return result;
             }
             catch
